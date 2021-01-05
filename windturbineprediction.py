@@ -1,6 +1,6 @@
 # Flask for web app
 import flask as fl
-from flask import jsonify
+from flask import jsonify, request
 #keras model 
 import keras.models
 from keras.models import load_model 
@@ -26,8 +26,11 @@ def random():
 # define a predict function as an endpoint 
 @app.route("/api/predict", methods=["GET","POST"])
 def predict():
-    #x=pd.DataFrame.from_dict(params, orient='index').transpose()
-    data = model.predict([15])
-    x = data.tolist()
-    # return a response in json format 
-    return jsonify({"value": x})
+    if request.method == "GET":
+        result = request.form.get('speed')
+        data = model.predict([7])
+        x = data.tolist()
+        # return a response in json format 
+        return jsonify({"value": x})
+    else:
+        return ("index.html")
