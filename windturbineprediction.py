@@ -1,11 +1,10 @@
 # Flask for web app
 import flask as fl
 from flask import jsonify, request
-#keras model 
-import keras.models
-from keras.models import load_model 
 #tensorflow
-import tensorflow as tf
+import tensorflow.keras
+#keras 
+from keras.models import load_model 
 #numpy
 import numpy as np
 
@@ -15,7 +14,7 @@ app = fl.Flask(__name__)
 model = load_model('model1.h5')
 
 #add a root route.
-@app.route('/')
+@app.route('/', methods=["GET","POST"])
 def home():
     return app.send_static_file('index.html')
 
@@ -28,7 +27,7 @@ def random():
 def predict():
     if request.method == "GET":
         result = request.form.get('speed')
-        data = model.predict([7])
+        data = model.predict([6])
         x = data.tolist()
         # return a response in json format 
         return jsonify({"value": x})
