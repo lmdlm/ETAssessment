@@ -1,8 +1,10 @@
 # Flask for web app
 import flask as fl
-from flask import jsonify, request
+from flask import jsonify, request, json
+import requests
 #tensorflow
-import tensorflow.keras
+import tensorflow
+import keras
 #keras 
 from keras.models import load_model 
 #numpy
@@ -23,13 +25,18 @@ def random():
     return{"value": np.random.normal()}
 #Copied and adapted from https://towardsdatascience.com/deploying-keras-deep-learning-models-with-flask-5da4181436a2
 # define a predict function as an endpoint 
-@app.route("/api/predict", methods=["GET","POST"])
+@app.route('/api/predict', methods=["GET","POST"])
 def predict():
-    if request.method == "GET":
-        result = request.form.get('speed')
-        data = model.predict([6])
+        #json_data = request.get_json(force=True)
+        #value = json_data["inputspd"]
+        result12 = 12
+        #print(type(json_data))      
+        print(result12)
+        #print(json_data)
+        data = model.predict([result12])
         x = data.tolist()
-        # return a response in json format 
+        # return a response in json format  
         return jsonify({"value": x})
-    else:
-        return ("index.html")
+   
+if __name__ == '__main__':
+     app.run()           

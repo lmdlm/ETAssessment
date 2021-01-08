@@ -15,38 +15,32 @@
   </head>
   <body>
     <h1>Hello, from wind turbine power output prediction app!</h1>
+    <!--<div class="container">
+      <form method="post"> <!-- or method="post" 
+        <input class="form-control1" id="input" name="speed" type="number" placeholder="Enter wind speed for power output prediction. Numerical values accepted - range between 5-25">
+          <input type="submit" value="Submit">
+      </form>-->
+  </div>
     <div class="container">
       <div class="row">
         <div class="col-sm">
-          <input class="form-control1" id="input" type="number" placeholder="Enter wind speed for power output prediction. Numerical values accepted - range between 5-25">
+          <form method="POST">
+            <input class="form-control1" id="inputspeed" name="inputspd" type="text" placeholder="Enter wind speed for power output prediction. Numerical values accepted - range between 5-25">
+            <button type="submit" value="speed" id="speedbtn">Predict</button>
+            <button type="button" value="speedinput" id="speedbtnget">Predict</button>
+          </form>
+          <div class="col-sm"> 
+          </div>
         </div>
       </div>
         <div class="row">
           <div class="col-sm">
-            <input class="form-control" id="output" type="text" placeholder="Enter wind speed for power output prediction..." readonly>
+            <input class="form-control" id="output" type="number" placeholder="Power output prediction..." readonly>
           </div>
         </div>
-        <div class="row">
-          <div class="col-sm">
-            <button type="button" class="btn btn-success" id="predict-button">Predict</button>
-          </div>
-          <div class="col-sm">
-            <button type="button" class="btn btn-primary" id="normal-button">Normal</button>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-sm">
-            <strong>Predicted power output is: </strong><span class="finaltxt-content"></span>
-          </div>
-      </div>
-      <div>
-        <form>
-          <p>Enter wind speed to predict power output</p>
-          <p><input type="number" name="speed" /></p>
-          <p><input type="submit" value="Predict" /></p>
-      </form>
-      </div>
-
+        
+        
+      
     <!-- Optional JavaScript; choose one of the two! -->
 
     <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
@@ -63,28 +57,13 @@
 
     <script>
         // Adapted from stack overflow posts.
-        $("#normal-button").click(function(e) {
+              
+	      $("#speedbtnget").click(function(e){
             e.preventDefault();
-            $.getJSON("/api/predict", function(data) {
-                $('#output').val(data.value);
+            $.getJSON("/api/predict", function(data){
+              $('#output').val(data.value);
             });
-        });
-        $("#uniform-button").click(function(e) {
-            e.preventDefault();
-            $.getJSON("/api/power", function(data) {
-                $('#output').val(data.value);
-            });
-        });
-        $(document).ready(function(){
-	        $("#predict-button").click(function(){
-            var mytxtcontent = $(".form-control1").val();
-            $.post("/api/predict", {mytxtcontent},
-            function(data, status){
-              alert("Data: " + data + "\nStatus: " + status);
-              }),
-            $(".finaltxt-content").html(mytxtcontent);
 	        });
-        });
     </script>
   </body>
 </html>
